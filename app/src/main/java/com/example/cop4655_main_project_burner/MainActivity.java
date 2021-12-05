@@ -152,19 +152,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getData() {
-        // creating a variable for storing our string.
         String url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
-        // creating a variable for request queue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        // making a json object request to fetch data from API.
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                // inside on response method extracting data
-                // from response and passing it to array list
-                // on below line we are making our progress
-                // bar visibility to gone.
-                // extracting data from json.
                 JSONArray dataArray = null;
                 try {
                     dataArray = response.getJSONArray("data");
@@ -212,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                     currencyModalArrayList.add(new CurrencyModal(name, symbol, price));
                 }
                 // notifying adapter on data change.
-//                    currencyRVAdapter.notifyDataSetChanged();
+                  currencyRVAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 // in this class we are passing our array list
 // and our View Holder class which we have created.
     public class CurrencyRVAdapter extends RecyclerView.Adapter {
+        public TextView symbolTV, rateTV, nameTV;
         private DecimalFormat df2 = new DecimalFormat("#.##");
         private ArrayList<CurrencyModal> currencyModals;
         private Context context;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
         }
 
         @NonNull
-        //@Override
+        @Override
         public CurrencyRVAdapter.CurrencyViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             // this method is use to inflate the layout file
             // which we have created for our recycler view.
@@ -45,20 +46,16 @@ import java.util.ArrayList;
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-        }
-
-        //@Override
-        public void onBindViewHolder(@NonNull CurrencyRVAdapter.CurrencyViewholder holder, int position) {
-            // on below line we are setting data to our item of
-            // recycler view and all its views.
             CurrencyModal modal = currencyModals.get(position);
-            holder.nameTV.setText(modal.getName());
-            holder.rateTV.setText("$ " + df2.format(modal.getPrice()));
-            holder.symbolTV.setText(modal.getSymbol());
+            nameTV.setText(modal.getName());
+            rateTV.setText("$ " + df2.format(modal.getPrice()));
+            symbolTV.setText(modal.getSymbol());
         }
 
-       // @Override
+
+
+
+       @Override
         public int getItemCount() {
             // on below line we are returning
             // the size of our array list.
@@ -68,7 +65,7 @@ import java.util.ArrayList;
         // on below line we are creating our view holder class
         // which will be used to initialize each view of our layout file.
         public class CurrencyViewholder extends RecyclerView.ViewHolder {
-            private TextView symbolTV, rateTV, nameTV;
+
 
             public CurrencyViewholder(@NonNull View itemView) {
                 super(itemView);
