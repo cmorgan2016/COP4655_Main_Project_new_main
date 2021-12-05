@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/idCVCurrency"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:id="@+id/idRLCurrency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--text view for displaying symbol-->
+        <TextView
+            android:id="@+id/idTVSymbol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_toStartOf="@id/idTVRate"
+            android:layout_toLeftOf="@id/idTVRate"
+            android:padding="3dp"
+            android:text="@string/Open"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <!--text view for displaying currency name-->
+        <TextView
+            android:id="@+id/idTVName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/idTVSymbol"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            android:padding="3dp"
+            android:text="@string/Close"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <!--text view for displaying currency rate-->
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="96dp"
+            android:layout_marginBottom="2dp"
+            app:srcCompat="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/idTVRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="81dp"
+            android:layout_marginRight="128dp"
+            android:layout_marginBottom="2dp"
+            android:layout_toStartOf="@+id/imageButton2"
+            android:padding="3dp"
+            android:text="@string/Close"
+            android:textColor="@color/black" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+
+
+

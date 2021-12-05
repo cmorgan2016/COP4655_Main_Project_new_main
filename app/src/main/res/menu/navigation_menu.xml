@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/Home"
+        android:icon="@drawable/ic_home_24dp"
+        android:title="Home"/>
+    <item android:id="@+id/todaysforecast"
+        android:icon="@drawable/ic_fav_24"
+        android:title="Today's Forecast"/>
+    <item android:id="@+id/map"
+        android:icon="@drawable/ic_compare_24dp"
+        android:title="Map"/>
+    <item android:id="@+id/sevenforecast"
+        android:icon="@drawable/ic_logout_24dp"
+        android:title="7 Day Forecast"/>
+</menu>
