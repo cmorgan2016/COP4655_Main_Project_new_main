@@ -3,14 +3,14 @@
 
     <item android:id="@+id/Home"
         android:icon="@drawable/ic_home_24dp"
-        android:title="Home"/>
+        android:title="Library"/>
     <item android:id="@+id/todaysforecast"
-        android:icon="@drawable/ic_fav_24"
-        android:title="Today's Forecast"/>
+        android:icon="@drawable/ic_star_fill"
+        android:title="Favorites"/>
     <item android:id="@+id/map"
         android:icon="@drawable/ic_compare_24dp"
-        android:title="Map"/>
+        android:title="Compare"/>
     <item android:id="@+id/sevenforecast"
         android:icon="@drawable/ic_logout_24dp"
-        android:title="7 Day Forecast"/>
+        android:title="Logout"/>
 </menu>
