@@ -3,4 +3,5 @@
     <string name="Open">open</string>
     <string name="Close">close</string>
     <string name="key">80db3be5-81b3-4f68-9f42-09fdee7ee21b</string>
+    <string name="emptyfields">Please fill all the fields</string>
 </resources>

@@ -1,230 +1,102 @@
 package com.example.cop4655_main_project_burner;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.material.navigation.NavigationView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout dl;
-    private ActionBarDrawerToggle t;
-    private NavigationView nv;
-    private EditText searchEdt;
-    private ArrayList<CurrencyModal> currencyModalArrayList;
-    private CurrencyRVAdapter currencyRVAdapter;;
-    RecyclerView RVcurrency;
+    Button login ,Reg;
+    FirebaseAuth auth;
+    EditText emailin, passin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login_reg);
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
 
-        searchEdt = findViewById(R.id.idEdtCurrency);
-        dl = findViewById(R.id.activity_main);
-        t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
+            login = findViewById(R.id.button);
+            login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    emailin =findViewById(R.id.editEmailAddress);
+                    passin=findViewById(R.id.editPassword);
+                    String email = emailin.getText().toString();
+                    String pass = passin.getText().toString();
+                    if(email.matches("") || pass.matches("")) {
+                        Toast.makeText(MainActivity.this, "Fill Fields",Toast.LENGTH_SHORT).show();
+                    } else{
+                        auth.signInWithEmailAndPassword(email, pass);
+                                        new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if(task.isSuccessful()) {
+                                                    Toast.makeText(MainActivity.this,  "Successfully Logged In", Toast.LENGTH_LONG).show();
+                                                    Intent intent = new Intent(MainActivity.this, Libaray.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }else {
+                                                    Toast.makeText(MainActivity.this,  "Login Failed", Toast.LENGTH_LONG).show();
+                                                }
+                                            }
 
-        dl.addDrawerListener(t);
-        t.syncState();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        nv = findViewById(R.id.nv);
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch(id)
-                {
-                    case R.id.Home:
-                        Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();break;
-                    case R.id.todaysforecast:
-                        Toast.makeText(MainActivity.this, "Settings",Toast.LENGTH_SHORT).show();break;
-                    case R.id.map:
-                        Toast.makeText(MainActivity.this, "My Cart",Toast.LENGTH_SHORT).show();break;
-                    case R.id.sevenforecast:
-                        Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();break;
-                    default:
-                        return true;
+                        };
+                    }
                 }
+            });
+            Reg = findViewById(R.id.button2);
+            Reg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    emailin =findViewById(R.id.editEmailAddress);
+                    passin=findViewById(R.id.editPassword);
+                    String email = emailin.getText().toString();
+                    String pass = passin.getText().toString();
+                    if(email.matches("") || pass.matches("")){
+                        Toast.makeText(MainActivity.this, "Fill Fields",Toast.LENGTH_SHORT).show();
+                    } else{
+                            auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task)
+                                {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Registration successful!", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(MainActivity.this, Libaray.class);
+                                                 startActivity(intent);
+                                    }
+                                    else {
 
+                                        // Registration failed
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                "Registration failed!!"
+                                                        + " Please try again later",
+                                                Toast.LENGTH_LONG)
+                                                .show();
 
-                return true;
-
-            }
-        });
-        RVcurrency = findViewById(R.id.idRVcurrency);
-        currencyModalArrayList = new ArrayList<>();
-
-        // initializing our adapter class.
-        currencyRVAdapter = new CurrencyRVAdapter(currencyModalArrayList, this);
-
-        // setting layout manager to recycler view.
-      RVcurrency.setLayoutManager(new LinearLayoutManager(this));
-
-        // setting adapter to recycler view.
-        RVcurrency.setAdapter(currencyRVAdapter);
-
-        // calling get data method to get data from API.
-        getData();
-
-        // on below line we are adding text watcher for our
-        // edit text to check the data entered in edittext.
-        searchEdt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // on below line calling a
-                // method to filter our array list
-                filter(s.toString());
-            }
-        });
-    }
-
-    private void filter(String filter) {
-        // on below line we are creating a new array list
-        // for storing our filtered data.
-        ArrayList<CurrencyModal> filteredlist = new ArrayList<>();
-        // running a for loop to search the data from our array list.
-        for (CurrencyModal item : currencyModalArrayList) {
-            // on below line we are getting the item which are
-            // filtered and adding it to filtered list.
-            if (item.getName().toLowerCase().contains(filter.toLowerCase())) {
-                filteredlist.add(item);
-            }
+                                        // hide the progress bar
+                                    }
+                                }
+                            });
+                }
+                }
+            });
         }
-        // on below line we are checking
-        // weather the list is empty or not.
-        if (filteredlist.isEmpty()) {
-            // if list is empty we are displaying a toast message.
-            Toast.makeText(this, "No currency found..", Toast.LENGTH_SHORT).show();
-        } else {
-            // on below line we are calling a filter
-            // list method to filter our list.
-            currencyRVAdapter.filterList(filteredlist);
+    else{
+        Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
-
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if(t.onOptionsItemSelected(item))
-            return true;
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    private void getData() {
-        String url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
-        RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                JSONArray dataArray = null;
-                try {
-                    dataArray = response.getJSONArray("data");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                for (int i = 0; i < dataArray.length(); i++) {
-                    JSONObject dataObj = null;
-                    try {
-                        dataObj = dataArray.getJSONObject(i);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    String symbol = null;
-                    try {
-                        symbol = dataObj.getString("symbol");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    String name = null;
-                    try {
-                        name = dataObj.getString("name");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    JSONObject quote = null;
-                    try {
-                        quote = dataObj.getJSONObject("quote");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    JSONObject USD = null;
-                    try {
-                        USD = quote.getJSONObject("USD");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    double price = 0;
-                    try {
-                        price = USD.getDouble("price");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    // adding all data to our array list.
-                    currencyModalArrayList.add(new CurrencyModal(name, symbol, price));
-                }
-                // notifying adapter on data change.
-                  currencyRVAdapter.notifyDataSetChanged();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // displaying error response when received any error.
-                Toast.makeText(MainActivity.this, "Something went amiss. Please try again later", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                // in this method passing headers as
-                // key along with value as API keys.
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("X-CMC_PRO_API_KEY", "80db3be5-81b3-4f68-9f42-09fdee7ee21b");
-                // at last returning headers
-                return headers;
-            }
-        };
-        // calling a method to add our
-        // json object request to our queue.
-        queue.add(jsonObjectRequest);
-    }
-}
+}}
