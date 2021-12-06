@@ -1,13 +1,15 @@
 package com.example.cop4655_main_project_burner;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -38,47 +40,48 @@ public class Libaray extends AppCompatActivity {
     private NavigationView nv;
     private EditText searchEdt;
     private ArrayList<CurrencyModal> currencyModalArrayList;
-    private CurrencyRVAdapter currencyRVAdapter;;
+    private CurrencyRVAdapter currencyRVAdapter;
     RecyclerView RVcurrency;
+    FirebaseAuth auth;
+    ImageButton fav;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        auth = FirebaseAuth.getInstance();
         searchEdt = findViewById(R.id.idEdtCurrency);
         dl = findViewById(R.id.activity_main);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
 
         dl.addDrawerListener(t);
         t.syncState();
-
+        fav = findViewById(R.id.imageButton2);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nv = findViewById(R.id.nv);
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch(id)
-                {
-                    case R.id.Home:
-                        Toast.makeText(Libaray.this, "My Account",Toast.LENGTH_SHORT).show();break;
-                    case R.id.todaysforecast:
-                        Toast.makeText(Libaray.this, "Settings",Toast.LENGTH_SHORT).show();break;
-                    case R.id.map:
-                        Toast.makeText(Libaray.this, "My Cart",Toast.LENGTH_SHORT).show();break;
-                    case R.id.sevenforecast:
-                        FirebaseAuth.getInstance().signOut();
-                        Toast.makeText(Libaray.this, "My Account",Toast.LENGTH_SHORT).show();break;
-                    default:
-                        return true;
-                }
-
-
+        nv.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.Home) {
+                Toast.makeText(Libaray.this, "Libaray", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.todaysforecast) {
+                Toast.makeText(Libaray.this, "Favorites", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.map) {
+                Toast.makeText(Libaray.this, "Compare", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.sevenforecast) {
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(Libaray.this, "Logout", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Libaray.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
                 return true;
-
             }
+
+
+            return true;
+
         });
         RVcurrency = findViewById(R.id.idRVcurrency);
         currencyModalArrayList = new ArrayList<>();
@@ -145,7 +148,6 @@ public class Libaray extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if(t.onOptionsItemSelected(item))
             return true;
 
