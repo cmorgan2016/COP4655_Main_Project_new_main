@@ -63,8 +63,8 @@ public class Libaray extends AppCompatActivity {
         nv = findViewById(R.id.nv);
         nv.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.Home) {
-                Toast.makeText(Libaray.this, "Libaray", Toast.LENGTH_SHORT).show();
+                if (id == R.id.Home) {
+                     Toast.makeText(Libaray.this, "Libaray", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.todaysforecast) {
                 Toast.makeText(Libaray.this, "Favorites", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.map) {
