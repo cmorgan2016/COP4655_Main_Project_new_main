@@ -3,14 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     <item android:id="@+id/Home"
         android:icon="@drawable/ic_home_24dp"
-        android:title="Library"/>
+        android:title="Library"
+    android:enabled="true"/>
     <item android:id="@+id/Favs"
         android:icon="@drawable/ic_star_fill"
-        android:title="Favorites"/>
+        android:title="Favorites"
+        android:enabled="true"/>
     <item android:id="@+id/Compare"
         android:icon="@drawable/ic_compare_24dp"
-        android:title="Compare"/>
+        android:title="Compare"
+        android:enabled="true"/>
     <item android:id="@+id/Logout"
         android:icon="@drawable/ic_logout_24dp"
-        android:title="Logout"/>
+        android:title="Logout"
+        android:enabled="true"/>
 </menu>

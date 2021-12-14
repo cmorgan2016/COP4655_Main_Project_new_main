@@ -47,19 +47,17 @@
 
         <!--text view for displaying currency rate-->
 
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="53dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="2dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="96dp"
-            android:layout_marginBottom="2dp"
-            app:srcCompat="@drawable/ic_star_fill" />
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="54dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="9dp"
+            android:background="@drawable/star_empty"
+            android:checked="false"
+            android:text="ToggleButton"
+            android:textOff=""
+            android:textOn="" />
 
         <TextView
             android:id="@+id/idTVRate"
@@ -72,7 +70,7 @@
             android:layout_marginEnd="81dp"
             android:layout_marginRight="128dp"
             android:layout_marginBottom="2dp"
-            android:layout_toStartOf="@+id/imageButton2"
+            android:layout_toStartOf="@+id/toggleButton"
             android:padding="3dp"
             android:text="val"
             android:textColor="@color/black" />

@@ -41,11 +41,11 @@ public class Favorite extends AppCompatActivity {
                 {
                     case R.id.Home:
                         Toast.makeText(Favorite.this, "My Account",Toast.LENGTH_SHORT).show();break;
-                    case R.id.todaysforecast:
+                    case R.id.Favs:
                         Toast.makeText(Favorite.this, "Settings",Toast.LENGTH_SHORT).show();break;
-                    case R.id.map:
+                    case R.id.Compare:
                         Toast.makeText(Favorite.this, "My Cart",Toast.LENGTH_SHORT).show();break;
-                    case R.id.sevenforecast:
+                    case R.id.Logout:
                         Toast.makeText(Favorite.this, "My Account",Toast.LENGTH_SHORT).show();break;
                     default:
                         return true;

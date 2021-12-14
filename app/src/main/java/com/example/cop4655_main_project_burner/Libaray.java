@@ -7,9 +7,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -24,6 +25,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +36,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Libaray extends AppCompatActivity {
+public class Libaray<Public> extends AppCompatActivity{
 
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
@@ -43,7 +46,10 @@ public class Libaray extends AppCompatActivity {
     private CurrencyRVAdapter currencyRVAdapter;
     RecyclerView RVcurrency;
     FirebaseAuth auth;
-    ImageButton fav;
+   ToggleButton fav;
+    MenuItem item;
+    DatabaseReference fav_list;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -57,32 +63,40 @@ public class Libaray extends AppCompatActivity {
 
         dl.addDrawerListener(t);
         t.syncState();
-        fav = findViewById(R.id.imageButton2);
+        fav = findViewById(R.id.toggleButton);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        nv = findViewById(R.id.nv);
-        nv.setNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-                if (id == R.id.Home) {
-                     Toast.makeText(Libaray.this, "Libaray", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.Favs) {
-                Toast.makeText(Libaray.this, "Favorites", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.Compare) {
-                Toast.makeText(Libaray.this, "Compare", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.Logout) {
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(Libaray.this, "Logout", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Libaray.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                return true;
-            }
+        nv = (NavigationView)findViewById(R.id.nv);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                                                 @Override
+                                                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                                                     switch (item.getItemId()) {
+                                                         case R.id.Home:
+                                                             Toast.makeText(Libaray.this, "Libaray", Toast.LENGTH_SHORT).show();
+                                                             break;
+                                                         case R.id.Favs:
+                                                             Toast.makeText(Libaray.this, "Favorites", Toast.LENGTH_SHORT).show();
+                                                             break;
+                                                         case R.id.Compare:
+                                                             Toast.makeText(Libaray.this, "Compare", Toast.LENGTH_SHORT).show();
+                                                             break;
+                                                         case R.id.Logout:
+                                                             FirebaseAuth.getInstance().signOut();
+                                                             Toast.makeText(Libaray.this, "Logout", Toast.LENGTH_SHORT).show();
+                                                             Intent intent = new Intent(Libaray.this, MainActivity.class);
+                                                             startActivity(intent);
+                                                             finish();
+                                                             break;
+
+                                                         default:
+                                                             throw new IllegalStateException("Unexpected value: " + item.getItemId());
+                                                     }
+                                                 return false;
+                                                 }
+                                             });
 
 
-            return true;
 
-        });
         RVcurrency = findViewById(R.id.idRVcurrency);
         currencyModalArrayList = new ArrayList<>();
 
@@ -118,6 +132,7 @@ public class Libaray extends AppCompatActivity {
                 filter(s.toString());
             }
         });
+
     }
 
     private void filter(String filter) {
@@ -154,6 +169,7 @@ public class Libaray extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+  
 
     private void getData() {
         String url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
@@ -231,4 +247,5 @@ public class Libaray extends AppCompatActivity {
         // json object request to our queue.
         queue.add(jsonObjectRequest);
     }
+
 }
