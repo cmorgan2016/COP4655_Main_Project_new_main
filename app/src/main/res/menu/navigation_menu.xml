@@ -4,13 +4,13 @@
     <item android:id="@+id/Home"
         android:icon="@drawable/ic_home_24dp"
         android:title="Library"/>
-    <item android:id="@+id/todaysforecast"
+    <item android:id="@+id/Favs"
         android:icon="@drawable/ic_star_fill"
         android:title="Favorites"/>
-    <item android:id="@+id/map"
+    <item android:id="@+id/Compare"
         android:icon="@drawable/ic_compare_24dp"
         android:title="Compare"/>
-    <item android:id="@+id/sevenforecast"
+    <item android:id="@+id/Logout"
         android:icon="@drawable/ic_logout_24dp"
         android:title="Logout"/>
 </menu>

@@ -65,11 +65,11 @@ public class Libaray extends AppCompatActivity {
             int id = item.getItemId();
                 if (id == R.id.Home) {
                      Toast.makeText(Libaray.this, "Libaray", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.todaysforecast) {
+            } else if (id == R.id.Favs) {
                 Toast.makeText(Libaray.this, "Favorites", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.map) {
+            } else if (id == R.id.Compare) {
                 Toast.makeText(Libaray.this, "Compare", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.sevenforecast) {
+            } else if (id == R.id.Logout) {
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(Libaray.this, "Logout", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Libaray.this, MainActivity.class);
