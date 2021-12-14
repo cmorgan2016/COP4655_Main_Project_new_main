@@ -11,7 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity3 extends AppCompatActivity {
+public class Favorite extends AppCompatActivity {
 
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
@@ -24,7 +24,7 @@ public class MainActivity3 extends AppCompatActivity {
 
 
 
-        dl = (DrawerLayout)findViewById(R.id.activity_main);
+        dl = findViewById(R.id.activity_main);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
 
         dl.addDrawerListener(t);
@@ -40,13 +40,13 @@ public class MainActivity3 extends AppCompatActivity {
                 switch(id)
                 {
                     case R.id.Home:
-                        Toast.makeText(MainActivity3.this, "My Account",Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(Favorite.this, "My Account",Toast.LENGTH_SHORT).show();break;
                     case R.id.todaysforecast:
-                        Toast.makeText(MainActivity3.this, "Settings",Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(Favorite.this, "Settings",Toast.LENGTH_SHORT).show();break;
                     case R.id.map:
-                        Toast.makeText(MainActivity3.this, "My Cart",Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(Favorite.this, "My Cart",Toast.LENGTH_SHORT).show();break;
                     case R.id.sevenforecast:
-                        Toast.makeText(MainActivity3.this, "My Account",Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(Favorite.this, "My Account",Toast.LENGTH_SHORT).show();break;
                     default:
                         return true;
                 }
